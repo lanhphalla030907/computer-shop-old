@@ -21,16 +21,14 @@ const ProfilePage = () => {
 
   const fetchUserProfile = async () => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost/api/profile.php', {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      
-      if (response.data.success) {
-        setFormData(response.data.user);
-        if (response.data.user.profileImage) {
-          setPreviewImage(`http://localhost/uploads/${response.data.user.profileImage}`);
-        }
+      const savedUser = JSON.parse(localStorage.getItem('user'));
+      if (savedUser) {
+        setFormData({
+          username: savedUser.username || '',
+          email: savedUser.email || '',
+          phone: '',
+          fullName: savedUser.username || ''
+        });
       }
     } catch (error) {
       console.error('Error fetching profile:', error);
@@ -59,58 +57,27 @@ const ProfilePage = () => {
     setMessage('');
 
     try {
-      const token = localStorage.getItem('token');
-      const data = new FormData();
-      
-      // Add form data
-      Object.keys(formData).forEach(key => {
-        data.append(key, formData[key]);
-      });
-      
-      // Add image if selected
-      if (profileImage) {
-        data.append('profile_image', profileImage);
-      }
-
-      const response = await axios.post('http://localhost/api/update_profile.php', data, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data'
-        }
-      });
-
-      if (response.data.success) {
+      setTimeout(() => {
+        const updatedUser = { ...user, ...formData };
+        setUser(updatedUser);
+        localStorage.setItem('user', JSON.stringify(updatedUser));
         setMessage('Profile updated successfully!');
         setEditMode(false);
-        
-        // Update local storage if username changed
-        if (response.data.user) {
-          const updatedUser = { ...user, ...response.data.user };
-          setUser(updatedUser);
-          localStorage.setItem('user', JSON.stringify(updatedUser));
-        }
-        
-        // Update preview image
-        if (response.data.profileImage) {
-          setPreviewImage(`http://localhost/uploads/${response.data.profileImage}`);
-        }
-      } else {
-        setMessage(response.data.msg || 'Error updating profile');
-      }
+        setLoading(false);
+      }, 500);
     } catch (error) {
       console.error('Error:', error);
       setMessage('Error updating profile');
-    } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-4xl mx-auto px-4">
+    <div className="min-h-screen bg-gray-50 py-8 px-4">
+      <div className="max-w-4xl mx-auto">
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
           {/* Header */}
-          <div className=" text-white">
+          <div className="bg-blue-600 text-white p-8">
             <h1 className="text-3xl font-bold">Profile Settings</h1>
             <p className="text-blue-100 mt-2">Manage your account information</p>
           </div>

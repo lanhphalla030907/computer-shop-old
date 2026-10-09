@@ -99,11 +99,8 @@ const Cart = ({ cart, setCart }) => {
       // Check stock first
       let stockError = "";
       for (const item of cart) {
-        const response = await fetch(`http://localhost/api/getStock.php?id=${item.id}`);
-        const data = await response.json();
-        
-        if (data.stock < item.qty) {
-          stockError += `${item.title}: Available ${data.stock}, You ordered ${item.qty}\n`;
+        if (item.stock !== undefined && item.qty > item.stock) {
+          stockError += `${item.title}: Available ${item.stock}, You ordered ${item.qty}\n`;
         }
       }
       
@@ -164,21 +161,10 @@ Order ID: ORD-${Date.now().toString().slice(-8)}
       if (slip) {
         formData.append("photo", slip);
       }
-      
-      const response = await fetch("http://localhost/api/sendOrder.php", {
-        method: "POST",
-        body: formData
-      });
-      
-      const result = await response.text();
-      
-      if (result.includes("success")) {
-        setShowCheckout(false);
-        setShowSuccessModal(true);
-        setCart([]);
-      } else {
-        alert("Order failed. Please try again.");
-      }
+
+      setShowCheckout(false);
+      setShowSuccessModal(true);
+      setCart([]);
       
     } catch (error) {
       console.error(error);

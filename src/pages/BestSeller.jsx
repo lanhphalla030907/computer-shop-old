@@ -73,13 +73,13 @@ const BestSeller = () => {
 
   return (
     <div>
-      <div className="py-10 p-text px-14">
-        <div className="flex justify-between items-center">
-          <h1 className="text-[40px] font-bold">
+      <div className="py-10 p-text px-4 sm:px-8 lg:px-14">
+        <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-5">
+          <h1 className="text-3xl md:text-[40px] font-bold">
             <span className="text-blue-600"> BEST</span> SELLTER
           </h1>
 
-          <div className="flex gap-8   text-gray-600 font-bold text-lg items-center">
+          <div className="flex gap-3 md:gap-8 text-gray-600 font-bold text-base md:text-lg items-center overflow-x-auto pb-2 lg:pb-0">
             {[
               "All Products",
               "Keyboards",
@@ -90,10 +90,10 @@ const BestSeller = () => {
               <li
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`list-none cursor-pointer px-4 py-1 rounded-md ${
+                className={`list-none cursor-pointer whitespace-nowrap px-4 py-1 rounded-md ${
                   activeCategory === cat
                     ? "bg-blue-500 text-white"
-                    : "xhover:bg-blue-500 hover:text-white"
+                    : "hover:bg-blue-500 hover:text-white"
                 }`}
               >
                 {cat}
@@ -107,11 +107,11 @@ const BestSeller = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-4 mt-7 px-7 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 mt-7 gap-5">
           {filteredProducts.map((item, i) => (
             <div
               key={i}
-              className="bg-white border border-gray-200 shadow rounded-xl px-7 py-5 w-80"
+              className="bg-white border border-gray-200 shadow rounded-xl px-5 md:px-7 py-5 w-full"
             >
               <div className="flex justify-between items-center mb-3">
                 <p className="text-gray-700 text-sm">{item.name}</p>
@@ -153,9 +153,9 @@ const BestSeller = () => {
             </div>
           ))}
         </div>
-        <div className="mt-10 bg-[url('https://rog.asus.com/media/1767581932430.jpg')] bg-center bg-cover h-80 rounded-xl px-10 py-8">
+        <div className="mt-10 bg-[url('https://rog.asus.com/media/1767581932430.jpg')] bg-center bg-cover h-80 rounded-xl px-6 md:px-10 py-8">
           <p className="text-sky-600 font-bold">THE ULTIMATE PLAY</p>
-          <h2 className="text-5xl max-w-90 font-bold text-sky-600">
+          <h2 className="text-3xl md:text-5xl max-w-90 font-bold text-sky-600">
             ROG Ryuo Enthusiast
           </h2>
           <p className=" font-bold text-2xl text-blue-600">$399.99</p>

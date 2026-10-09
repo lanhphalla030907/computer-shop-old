@@ -119,17 +119,17 @@ const Discount = () => {
 
   return (
     
-    <div className="bg-[#0b1020] py-10 text-white p-text mt-60 relative">
-      <div className=" absolute left-[55%] top-[-7%] z-0  pointer-events-none ">
+    <div className="bg-[#0b1020] py-10 text-white p-text mt-10 relative overflow-hidden">
+      <div className="hidden md:block absolute left-[55%] top-[-7%] z-0 pointer-events-none">
         <img className="w-160" src={controller} alt="" />
       </div>
-      <div className="relative flex items-center px-16 py-20 overflow-hidden">
+      <div className="relative flex items-center px-5 md:px-16 py-14 md:py-20 overflow-hidden">
         <div className="z-10 max-w-xl">
-          <h2 className="text-blue-500 font-bold text-5xl mb-2">
+          <h2 className="text-blue-500 font-bold text-3xl md:text-5xl mb-2">
             GET SPECIAL PRICE
           </h2>
 
-          <h1 className="text-5xl font-extrabold ">UP TO 50% OFF</h1>
+          <h1 className="text-3xl md:text-5xl font-extrabold ">UP TO 50% OFF</h1>
 
           <p className="text-white mb-8 uppercase tracking-wide font-bold text-lg">
             Trusted by pros. Made for winners.
@@ -156,7 +156,7 @@ const Discount = () => {
           </div>
         </div>
       </div>
-      <div className=" w-full px-14 relative z-20">
+      <div className="w-full px-5 md:px-14 relative z-20">
         <div className="relative w-full overflow-hidden">
           <div
             className="flex gap-7 transition-transform duration-500"

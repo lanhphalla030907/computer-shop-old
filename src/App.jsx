@@ -13,6 +13,7 @@ import AllProducts from "./pages/AllProducts";
 import DetailProducts from "./Admin/DetailProducts";
 import Cart from "./pages/Cart";
 import ContactPage from "./pages/ContactPage";
+import ProfilePage from "./pages/ProfilePage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AdminDashboard from "./Admin/AdminDashboard";
 import AdminProducts from "./Admin/AdminProducts";
@@ -97,6 +98,7 @@ function AppContent() {
 
         <Route path="/about" element={<AboutUs />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
         <Route path="/product" element={<AllProducts addToCart={addToCart} />} />
         <Route path="/detail/:id" element={<DetailProducts addToCart={addToCart} />} />
         <Route path="/cart" element={<Cart cart={cart} setCart={setCart} />} />

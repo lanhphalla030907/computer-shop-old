@@ -149,27 +149,17 @@ export default function AdminDashboard() {
   }, []);
 
   function loadData() {
-    fetch("http://localhost/api/getOrders.php")
-      .then((r) => r.json())
-      .then((ordersData) => {
-        setData(ordersData);
-        return fetch("http://localhost/api/products.php?action=list");
-      })
-      .then((r) => r.json())
-      .then((productsData) => {
-        setProducts(productsData || []);
-        // Load real customer data
-        return fetch("http://localhost/api/getCustomers.php");
-      })
-      .then((r) => r.json())
-      .then((customersData) => {
-        setCustomers(customersData || []);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error loading data:", error);
-        setLoading(false);
-      });
+    Promise.resolve(ordersStatic).then((ordersData) => {
+      setData({ orders: ordersData });
+      setProducts(productsStatic);
+      return Promise.resolve(customersStatic);
+    }).then((customersData) => {
+      setCustomers(customersData || []);
+      setLoading(false);
+    }).catch((error) => {
+      console.error("Error loading data:", error);
+      setLoading(false);
+    });
   }
 
   function handleProductFormChange(e) {
@@ -234,15 +224,7 @@ export default function AdminDashboard() {
     localStorage.removeItem("auth_token");
 
     // Clear session ពី server
-    fetch("http://localhost/api/logout.php", {
-      method: "POST",
-      credentials: "include",
-    })
-      .catch((err) => console.log("Logout API error:", err))
-      .finally(() => {
-        // Redirect ទៅទំព័រដើម
-        window.location.href = "/";
-      });
+    window.location.href = "/";
   }
 
   if (loading) {
@@ -1897,3 +1879,6 @@ export default function AdminDashboard() {
     </div>
   );
 }
+import { ordersStatic } from "../Data/ordersStatic";
+import { customersStatic } from "../Data/customersStatic";
+import { productsStatic } from "../Data/productsStatic";

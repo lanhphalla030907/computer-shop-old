@@ -41,10 +41,10 @@ const Special = () => {
   ];
   return (
     <div>
-      <div className=" w-full bg-white px-15  p-text">
-        <div className="grid grid-cols-3 gap-10">
-          <div className="w-full py-25">
-            <h2 className="text-black font-bold text-5xl ">
+      <div className=" w-full bg-white px-4 sm:px-8 lg:px-15 p-text">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+          <div className="w-full py-10 lg:py-25">
+            <h2 className="text-black font-bold text-3xl md:text-5xl ">
               {" "}
               <span className="text-blue-500">NEWS</span> PRODUCTS
             </h2>
@@ -52,10 +52,10 @@ const Special = () => {
               {news.map((item, i) => (
                 <div
                   key={i}
-                  className="w-full h-45 border border-gray-200 shadow text-black rounded-lg px-2 py-7 "
+                  className="w-full min-h-45 border border-gray-200 shadow text-black rounded-lg px-2 py-5 "
                 >
                   <div className="flex gap-3">
-                    <img className="w-35 h-35" src={item.img} alt="" />
+                    <img className="w-28 h-28 md:w-35 md:h-35 object-contain" src={item.img} alt="" />
                     <div className="flex flex-col">
                       <p className=" font-semibold text-lg">{item.desc}</p>
                       <div className="flex items-center mt-1">
@@ -74,13 +74,13 @@ const Special = () => {
               ))}
             </div>
           </div>
-          <div className="border-3 rounded-lg px-8 mt-17 py-8 border-blue-600 h-170">
-            <h2 className="text-black font-bold text-5xl ">
+          <div className="border-3 rounded-lg px-6 md:px-8 lg:mt-17 py-8 border-blue-600 h-auto lg:h-170">
+            <h2 className="text-black font-bold text-3xl md:text-5xl ">
               {" "}
               <span className="text-blue-500">SPECIAL</span> OFFER
             </h2>
             <div className="flex flex-col">
-              <img className="h-100" 
+              <img className="h-64 md:h-100 object-contain" 
                 src="https://demo2.pavothemes.com/razox/wp-content/uploads/2024/03/product-30-1-600x600.png"
                 alt=""
               />
@@ -101,8 +101,8 @@ const Special = () => {
                 </div>
             </div>
           </div>
-           <div className="w-full py-25">
-            <h2 className="text-black font-bold text-5xl ">
+           <div className="w-full py-10 lg:py-25">
+            <h2 className="text-black font-bold text-3xl md:text-5xl ">
               {" "}
               <span className="text-blue-500">TOP</span> SELLING
             </h2>
@@ -110,10 +110,10 @@ const Special = () => {
               {New.map((item, i) => (
                 <div
                   key={i}
-                  className="w-full h-45 border border-gray-200 shadow text-black rounded-md px-2 py-7"
+                  className="w-full min-h-45 border border-gray-200 shadow text-black rounded-lg px-2 py-5 "
                 >
                   <div className="flex gap-3">
-                    <img className="w-35 h-35" src={item.img} alt="" />
+                    <img className="w-28 h-28 md:w-35 md:h-35 object-contain" src={item.img} alt="" />
                     <div className="flex flex-col">
                       <p className=" font-semibold text-lg">{item.desc}</p>
                       <div className="flex items-center mt-1">

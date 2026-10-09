@@ -28,6 +28,9 @@ import {
   FaSignOutAlt,
   FaUserCircle,
 } from "react-icons/fa";
+import { productsStatic } from "../Data/productsStatic";
+import { customersStatic } from "../Data/customersStatic";
+import { ordersStatic } from "../Data/ordersStatic";
 
 export default function AdminDashboard() {
   const [data, setData] = useState(null);
@@ -55,10 +58,15 @@ export default function AdminDashboard() {
     lastLogin: new Date().toLocaleDateString(),
   });
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const location = useLocation();
   const navigate = useNavigate();
   const currentPath = location.pathname.split('/').pop() || 'dashboard';
+
+  useEffect(() => {
+    setSidebarOpen(false);
+  }, [location.pathname]);
 
   useEffect(() => {
     loadData();
@@ -83,39 +91,23 @@ export default function AdminDashboard() {
   }, []);
 
   function loadData() {
-    fetch("http://localhost/api/getOrders.php")
-      .then((r) => r.json())
-      .then((ordersData) => {
-        setData(ordersData);
-        return fetch("http://localhost/api/products.php?action=list");
-      })
-      .then((r) => r.json())
-      .then((productsData) => {
-        setProducts(productsData || []);
-        return fetch("http://localhost/api/getCustomers.php");
-      })
-      .then((r) => r.json())
-      .then((customersData) => {
-        setCustomers(customersData || []);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error loading data:", error);
-        setLoading(false);
-      });
+    Promise.resolve({
+      orders: ordersStatic,
+    }).then((ordersData) => {
+      setData(ordersData);
+      setProducts(productsStatic);
+      setCustomers(customersStatic);
+      setLoading(false);
+    }).catch((error) => {
+      console.error("Error loading data:", error);
+      setLoading(false);
+    });
   }
 
   function handleLogout() {
     localStorage.removeItem("user");
     localStorage.removeItem("auth_token");
-    fetch("http://localhost/api/logout.php", {
-      method: "POST",
-      credentials: "include",
-    })
-      .catch((err) => console.log("Logout API error:", err))
-      .finally(() => {
-        window.location.href = "/";
-      });
+    window.location.href = "/";
   }
 
   if (loading) {
@@ -160,8 +152,20 @@ export default function AdminDashboard() {
 
   return (
     <div className="flex min-h-screen bg-gray-100 p-text">
+      {/* Mobile Overlay */}
+      {sidebarOpen && (
+        <div
+          onClick={() => setSidebarOpen(false)}
+          className="fixed inset-0 bg-black/50 z-30 lg:hidden"
+        ></div>
+      )}
+
       {/* Sidebar */}
-      <div className="w-64 bg-gray-900 text-white p-4">
+      <div
+        className={`fixed lg:static inset-y-0 left-0 z-40 w-64 bg-gray-900 text-white p-4 h-screen lg:h-auto overflow-y-auto transform transition-transform duration-300 ${
+          sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+        }`}
+      >
         <div className="mb-8">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
@@ -240,18 +244,29 @@ export default function AdminDashboard() {
       {/* Main Content */}
       <div className="flex-1">
         {/* Top Bar */}
-        <div className="bg-white border-b px-6 py-4">
-          <div className="flex justify-between items-center">
-            <div>
-              <h1 className="text-xl font-bold text-gray-800">
-                {pageTitles[currentPath] || "Dashboard"}
-              </h1>
-              <p className="text-gray-600 text-sm">
-                {pageDescriptions[currentPath] || ""}
-              </p>
+        <div className="bg-white border-b px-4 md:px-6 py-4">
+          <div className="flex justify-between items-center gap-3">
+            <div className="flex items-center gap-3 min-w-0">
+              <button
+                onClick={() => setSidebarOpen(true)}
+                className="lg:hidden text-gray-700 text-xl focus:outline-none"
+                aria-label="Open menu"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              </button>
+              <div className="min-w-0">
+                <h1 className="text-lg md:text-xl font-bold text-gray-800 truncate">
+                  {pageTitles[currentPath] || "Dashboard"}
+                </h1>
+                <p className="text-gray-600 text-sm truncate hidden sm:block">
+                  {pageDescriptions[currentPath] || ""}
+                </p>
+              </div>
             </div>
               
-            <div className="flex items-center gap-7">
+            <div className="flex items-center gap-4 md:gap-7">
               {/* Notification Bell */}
               <div className="relative">
                 <FaBell className="text-xl text-gray-600 cursor-pointer" />
@@ -265,7 +280,7 @@ export default function AdminDashboard() {
               {/* Profile Dropdown */}
               <div className="relative">
                 <button 
-                  className="flex items-center gap-3 focus:outline-none"
+                  className="flex items-center gap-2 md:gap-3 focus:outline-none"
                   onClick={() => setShowProfileDropdown(!showProfileDropdown)}
                 >
                   <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg overflow-hidden">
@@ -371,7 +386,7 @@ export default function AdminDashboard() {
         </div>
 
         {/* Content Area - Routes will render here */}
-        <div className="p-6">
+        <div className="p-4 md:p-6">
           <Outlet context={{
             data,
             products,

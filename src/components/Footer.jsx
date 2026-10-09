@@ -8,14 +8,14 @@ import {
 
 export default function Footer() {
   return (
-    <footer className="bg-[#1f1f1f] text-gray-400 relative p-text mt-30">
+    <footer className="bg-[#1f1f1f] text-gray-400 relative p-text mt-10">
       <div className="border-b border-gray-700">
-        <div className=" px-15 py-10 flex flex-col lg:flex-row items-center gap-6">
+        <div className=" px-4 sm:px-8 lg:px-15 py-10 flex flex-col lg:flex-row items-center gap-6">
           <div className="flex items-center gap-4 text-white flex-1">
             <Phone className="text-blue-500 " size={50} />
             <div>
               <p className="text-lg text-gray-400">Order And Service</p>
-              <p className="text-4xl font-bold text-blue-500">
+              <p className="text-2xl md:text-4xl font-bold text-blue-500">
                 (+885) 962657233
               </p>
             </div>
@@ -25,7 +25,7 @@ export default function Footer() {
             <h3 className="text-white text-xl font-semibold">
               Subscribe to our mailing list
             </h3>
-            <p className="text-md">
+            <p className="text-sm">
               Sign up for special perks starting now with a 10% Off Coupon!
             </p>
           </div>
@@ -110,7 +110,7 @@ export default function Footer() {
 
       <div className="border-t border-gray-700 py-6">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-md font-bold">
+          <p className="text-sm font-bold">
             Copyright © 2024 <span className="text-white">Razox</span>. All
             rights reserved
           </p>

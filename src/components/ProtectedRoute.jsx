@@ -8,25 +8,18 @@ function ProtectedRoute({ children }) {
   useEffect(() => {
     const checkAdmin = async () => {
       try {
-        //  ប្រើ fetch ជាមួយ credentials
-        const res = await fetch("http://localhost/api/check_auth.php", {
-          credentials: "include"
-        });
-        const data = await res.json();
-        
-        if (data.authenticated && data.user.role === 'admin') {
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (user && user.role === "admin") {
           setIsAdmin(true);
         } else {
           setIsAdmin(false);
         }
       } catch (error) {
-        console.error("Auth check failed:", error);
         setIsAdmin(false);
       } finally {
         setLoading(false);
       }
     };
-    
     checkAdmin();
   }, []);
   

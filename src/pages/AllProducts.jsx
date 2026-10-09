@@ -4,8 +4,9 @@ import Brands from "../components/Brands";
 import { BiCategoryAlt } from "react-icons/bi";
 import { BsFillMenuButtonWideFill } from "react-icons/bs";
 import { MdStarRate } from "react-icons/md";
-import { FaRegHeart } from "react-icons/fa6";
+import { FaRegHeart, FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 import AddToCartModal from "../components/AddToCartModal";
+import { productsStatic } from "../Data/productsStatic";
 const AllProducts = ({ addToCart }) => {
   const [products, setProducts] = useState([]);
   const [show, setshow] = useState(true);
@@ -18,11 +19,10 @@ const AllProducts = ({ addToCart }) => {
   const [selectBrand, setselectBrand] = useState(null);
   const [appliedPrice, setAppliedPrice] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [showFilters, setShowFilters] = useState(false);
   useEffect(() => {
-  fetch("http://localhost/api/products.php")
-    .then(res => res.json())
-    .then(setProducts);
-}, []);
+    setProducts(productsStatic);
+  }, []);
   const ITEMS_PER_PAGE = 9; // NEW
   const [currentPage, setCurrentPage] = useState(1); // NEW
 
@@ -98,7 +98,7 @@ const AllProducts = ({ addToCart }) => {
   return (
     <div>
       <div className="w-full shadow bg-white border border-b-gray-200 p-text font-bold py-5">
-        <ul className="md:flex hidden  justify-center gap-15">
+        <ul className="flex overflow-x-auto md:justify-center gap-6 md:gap-15 px-4 text-sm md:text-base whitespace-nowrap">
           <li>COMPUTERS</li>
           <li>KEYBOARDS</li>
           <li>MOUSE</li>
@@ -108,11 +108,11 @@ const AllProducts = ({ addToCart }) => {
           <li>CHAIR GAMING</li>
         </ul>
       </div>
-      <div className="lg:px-15 px-5 py-15 p-text">
-        <h2 className="text-6xl font-bold">Products</h2>
-        <div className=' rounded-xl mt-5 lg:bg-cover bg-contain lg:bg-center bg-[url("https://dlcdnwebimgs.asus.com/gain/A9E6C22B-47F1-4F8D-8B92-6052637263D2/fwebp/fwebp")] w-full h-70'></div>
-        <div className="flex gap-10 py-10">
-          <div className="w-[25%] lg:flex hidden">
+      <div className="lg:px-15 px-5 py-10 md:py-15 p-text">
+        <h2 className="text-4xl md:text-6xl font-bold">Products</h2>
+        <div className=' rounded-xl mt-5 lg:bg-cover bg-contain lg:bg-center bg-[url("https://dlcdnwebimgs.asus.com/gain/A9E6C22B-47F1-4F8D-8B92-6052637263D2/fwebp/fwebp")] w-full h-50 md:h-70'></div>
+        <div className="flex flex-col lg:flex-row gap-10 py-10">
+          <div className={`w-full lg:w-[25%] lg:shrink-0 ${showFilters ? "flex" : "hidden"} lg:flex`}>
             <div className="w-full flex flex-col gap-5 font-bold text-gray-700">
               <div className="border-t border-b border-b-gray-300 border-t-gray-300 py-3">
                 <div className="flex justify-between items-center ">
@@ -259,7 +259,7 @@ const AllProducts = ({ addToCart }) => {
               </div>
             </div>
           </div>
-          <div className="w-full  lg:w-[85%]">
+          <div className="w-full lg:flex-1 lg:min-w-0">
             <div className="flex justify-between">
               <div className="hidden lg:flex gap-3 items-center">
                 <div
@@ -288,7 +288,10 @@ const AllProducts = ({ addToCart }) => {
                   Show all products result
                 </p>
               </div>
-              <p className="md:hidden block px-5 py-2 bg-black font-bold text-white rounded-md">
+              <p
+                onClick={() => setShowFilters(!showFilters)}
+                className="md:hidden block px-5 py-2 bg-black font-bold text-white rounded-md cursor-pointer"
+              >
                 Filter
               </p>
               <div className="flex gap-3">

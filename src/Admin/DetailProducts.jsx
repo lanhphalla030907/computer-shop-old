@@ -10,6 +10,7 @@ import { RiSubtractFill } from "react-icons/ri";
 import { FiPlus } from "react-icons/fi";
 import { FaExclamationTriangle } from "react-icons/fa";
 import AddToCartModal from "../components/AddToCartModal";
+import { productsStatic } from "../Data/productsStatic";
 const DetailProducts = ({ addToCart }) => {
 const { id } = useParams();
 
@@ -19,9 +20,7 @@ const [showModal, setShowModal] = useState(false);
 const [comment, setComment] = useState("Description");
 
 useEffect(() => {
-  fetch("http://localhost/api/products.php")
-    .then(res => res.json())
-    .then(data => setProducts(data.products || data));
+  setProducts(productsStatic);
 }, []);
 
 if (products.length === 0) {
@@ -42,7 +41,7 @@ const relatedProducts = products.filter(
   return (
     <div>
       <div className="w-full shadow bg-white border border-b-gray-200 p-text font-bold py-5">
-        <ul className="md:flex hidden  justify-center gap-15">
+        <ul className="flex overflow-x-auto md:justify-center gap-6 md:gap-15 px-4 text-sm md:text-base whitespace-nowrap">
           <li>COMPUTERS</li>
           <li>KEYBOARDS</li>
           <li>MOUSE</li>
@@ -52,16 +51,16 @@ const relatedProducts = products.filter(
           <li>CHAIR GAMING</li>
         </ul>
       </div>
-     <div className="px-30 py-10 p-text">
-  <div className="flex gap-15">
+     <div className="px-4 sm:px-8 lg:px-30 py-10 p-text">
+  <div className="flex flex-col lg:flex-row gap-8 lg:gap-15">
     <img
-      className="w-135 h-130 border border-gray-200 rounded-md"
+      className="w-full max-w-md mx-auto lg:mx-0 lg:w-135 h-auto md:h-130 border border-gray-200 rounded-md"
       src={product.img}
       alt=""
     />
     <div className="flex flex-col gap-3 py-3">
-      <h2 className="font-bold text-4xl p-text">{product.title}</h2>
-      <div className="flex gap-5 items-center">
+      <h2 className="font-bold text-2xl md:text-4xl p-text">{product.title}</h2>
+      <div className="flex flex-wrap gap-3 md:gap-5 items-center">
         <p className="text-gray-500 font-semibold">
           Brands: <span className="text-black">{product.brand}</span>
         </p>
@@ -121,8 +120,8 @@ const relatedProducts = products.filter(
           
         </div>
         
-        <div className="flex gap-3">
-          <button className="flex gap-7 items-center bg-gray-100 px-8 text-lg rounded-md h-14">
+        <div className="flex flex-wrap gap-3">
+          <button className="flex gap-7 items-center bg-gray-100 px-6 md:px-8 text-lg rounded-md h-14">
             <RiSubtractFill
               onClick={() => setcount((prev) => Math.max(prev - 1, 1))}
               className="hover:text-blue-500 cursor-pointer"
@@ -155,7 +154,7 @@ const relatedProducts = products.filter(
               addToCart({ ...product, qty: count, id: product.id });
               setShowModal(true);
             }}
-            className="h-14 text-xl hover:bg-blue-500 bg-black text-white font-bold px-35 rounded-sm"
+            className="h-14 text-base md:text-xl hover:bg-blue-500 bg-black text-white font-bold px-8 md:px-35 rounded-sm"
             disabled={product.stock === 0} 
           >
             {product.stock === 0 ? "OUT OF STOCK" : "ADD TO CART"}
@@ -180,7 +179,7 @@ const relatedProducts = products.filter(
           </div>
         )}
         
-        <div className="flex justify-between py-7">
+        <div className="flex flex-col sm:flex-row gap-4 sm:justify-between py-7">
           <div className="flex items-center gap-2">
             <TbTruckDelivery className="text-3xl" />
             <p className="text-black font-bold text-sm">
@@ -216,7 +215,7 @@ const relatedProducts = products.filter(
   </div>
 </div>
       <div className="mt-5 border-t border-b border-t-gray-200 border-b-gray-200 py-7 p-text">
-        <div className="flex justify-center items-center gap-8 text-2xl text-gray-700 font-bold">
+        <div className="flex flex-wrap justify-center items-center gap-4 md:gap-8 text-lg md:text-2xl text-gray-700 font-bold px-4">
           <li
             onClick={() => setComment("Description")}
             className={` list-none relative px-3 py-1 font-medium cursor-pointer
@@ -268,9 +267,9 @@ const relatedProducts = products.filter(
               libero. Nesciunt explicabo harum sunt possimus dignissimos eveniet
               rem distinctio dolor?
             </p>
-            <div className="flex  gap-8 py-7">
-              <div className="flex flex-col w-[45%]">
-                <p className="font-bold text-4xl">Take Control</p>
+            <div className="flex flex-col md:flex-row gap-8 py-7">
+              <div className="flex flex-col w-full md:w-[45%]">
+                <p className="font-bold text-2xl md:text-4xl">Take Control</p>
                 <p className=" font-medium mt-3">
                   There are many variations of passages of Lorem Ipsum
                   available, but the majority have suffered alteration in some
@@ -283,8 +282,8 @@ const relatedProducts = products.filter(
                   alt=""
                 />
               </div>
-              <div className="flex flex-col w-[45%]">
-                <p className="font-bold text-4xl">Play-A-Long</p>
+              <div className="flex flex-col w-full md:w-[45%]">
+                <p className="font-bold text-2xl md:text-4xl">Play-A-Long</p>
                 <p className="font-medium mt-3">
                   Lorem ipsum dolor sit amet consectetur adipiscing diam tortor
                   sit feugiat dictum eu diam euismod ultrices convallis eget vel
@@ -298,7 +297,7 @@ const relatedProducts = products.filter(
                 />
               </div>
             </div>
-            <p className="font-bold text-4xl ">Smooth Moves</p>
+            <p className="font-bold text-2xl md:text-4xl ">Smooth Moves</p>
             <p className="font-medium mt-3">
               There are many variations of passages of Lorem Ipsum available,
               but the majority have suffered alteration in some form, by
@@ -309,10 +308,10 @@ const relatedProducts = products.filter(
         )}
         {comment == "Specifications" && (
           <div className="max-w-4xl mx-auto py-8">
-            <h2 className="flex justify-center font-bold text-5xl">
+            <h2 className="flex justify-center font-bold text-3xl md:text-5xl">
               Specifications
             </h2>
-            <div className="flex mt-5 max-w-3xl justify-between border-b border-b-gray-200 py-10">
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-0 mt-5 max-w-3xl justify-between border-b border-b-gray-200 py-10">
               <p className="text-xl text-gray-400 font-bold">GENERAL :</p>
               <div className="flex flex-col gap-1.5">
                 <li>
@@ -359,7 +358,7 @@ const relatedProducts = products.filter(
                 </li>
               </div>
             </div>
-            <div className="flex mt-5 max-w-3xl gap-70 border-b border-b-gray-200 py-10">
+            <div className="flex flex-col sm:flex-row mt-5 max-w-3xl gap-4 sm:gap-70 border-b border-b-gray-200 py-10">
               <p className="text-xl text-gray-400 font-bold">SENSOR :</p>
               <div className="flex flex-col gap-1.5">
                 <li className="font-bold">
@@ -371,7 +370,7 @@ const relatedProducts = products.filter(
                 <li className="font-bold">Maximum DPI: 19,000</li>
               </div>
             </div>
-            <div className="flex mt-5 max-w-3xl gap-62  border-b border-b-gray-200 py-10">
+            <div className="flex flex-col sm:flex-row mt-5 max-w-3xl gap-4 sm:gap-62  border-b border-b-gray-200 py-10">
               <p className="text-xl text-gray-400 font-bold">DIMENSIONS:</p>
               <div className="flex flex-col gap-1.5">
                 <li>
@@ -388,7 +387,7 @@ const relatedProducts = products.filter(
                 </li>
               </div>
             </div>
-            <div className="flex mt-5 max-w-3xl gap-57  ">
+            <div className="flex flex-col sm:flex-row mt-5 max-w-3xl gap-4 sm:gap-57  ">
               <p className="text-xl text-gray-400 font-bold">COMPATIBILITY:</p>
               <div className="flex flex-col gap-1.5">
                 <li>
@@ -416,7 +415,7 @@ const relatedProducts = products.filter(
         {comment == "Reviews" && (
           <div className="max-w-4xl mx-auto py-10 space-y-10">
             <div className="text-center">
-              <h2 className="text-5xl font-bold">Customer Reviews</h2>
+              <h2 className="text-3xl md:text-5xl font-bold">Customer Reviews</h2>
               <div className="flex justify-center items-center gap-3 mt-3">
                 <span className="text-4xl font-semibold">3.5</span>
                 <div className="text-yellow-400 text-lg">★★★★☆</div>
@@ -493,13 +492,13 @@ const relatedProducts = products.filter(
           </div>
         )}
       </div>
-      <div className="py-15 px-10 p-text">
-        <h2 className="text-5xl font-bold">Related products</h2>
-        <div className="grid grid-cols-4 mt-7 px-7 gap-5">
+      <div className="py-12 md:py-15 px-4 sm:px-8 lg:px-10 p-text">
+        <h2 className="text-3xl md:text-5xl font-bold">Related products</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 mt-7 gap-5">
           {relatedProducts.map((item, i) => (
             <div
               key={i}
-              className="bg-white border border-gray-200 shadow rounded-xl px-7 py-5 w-80"
+              className="bg-white border border-gray-200 shadow rounded-xl px-5 md:px-7 py-5 w-full"
             >
               <div className="flex justify-between items-center mb-3">
                 <p className="text-gray-700 text-sm">{item.name}</p>
