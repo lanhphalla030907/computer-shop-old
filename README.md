@@ -58,3 +58,8 @@ src/
 ## Notes
 
 This version runs entirely as a static frontend. All backend API calls have been replaced with static data for standalone deployment.
+
+## Backend
+
+The backend API (Laravel) is under development and available at:  
+[https://github.com/lanhphalla030907/computer-shop-backend](https://github.com/lanhphalla030907/computer-shop-backend)
